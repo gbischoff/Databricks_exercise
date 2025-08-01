@@ -1,0 +1,26 @@
+# Create a temporary view for the new data
+kunden_id_not_null.createOrReplaceTempView("new_kunden_data")
+
+# Get the column names of the table
+columns = [field.name for field in spark.table("###.###.bronze_kunde").schema.fields]
+
+# Construct the merge statement with a for loop for the columns
+merge_statement = """
+    MERGE INTO fokusqa.spb.bronze_kunde AS target
+    USING new_kunden_data AS source
+    ON target.kunden_id = source.kunden_id
+    WHEN MATCHED AND ({conditions}) THEN
+    UPDATE SET {updates}
+    WHEN NOT MATCHED THEN
+    INSERT *
+"""
+
+# Generate conditions and updates for the columns
+conditions = " OR ".join([f"target.{col} != source.{col}" for col in columns if col != "kunden_id"])
+updates = ", ".join([f"target.{col} = source.{col}" for col in columns if col != "kunden_id"])
+
+# Format the merge statement with the generated conditions and updates
+merge_statement = merge_statement.format(conditions=conditions, updates=updates)
+
+# Perform the merge operation
+spark.sql(merge_statement)
