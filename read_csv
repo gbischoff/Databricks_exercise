@@ -13,4 +13,4 @@ bronze_Kunde_lazy = (
     .withColumn("FilePath", col("_metadata.file_path"))
 )
 
-display(bronze_Kunde_lazy) Siehe Foto display_bronze_kunde
+display(bronze_Kunde_lazy) #Siehe Foto display_bronze_kunde_lazy
