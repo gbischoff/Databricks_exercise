@@ -1,0 +1,21 @@
+#create Schema Kunden bronze table
+
+from pyspark.sql.types import StringType, StructType, StructField
+
+schema_kunden = StructType([
+    StructField("id", StringType(), True),
+    StructField("kunden_id", StringType(), True),
+    StructField("vorname", StringType(), True),
+    StructField("nachname", StringType(), True),
+    StructField("strasse", StringType(), True),
+    StructField("ort", StringType(), True),
+    StructField("plz", StringType(), True),
+    StructField("vorwahl", StringType(), True),
+    StructField("telefon", StringType(), True),
+    StructField("bundesland", StringType(), True),
+    StructField("geburtstag", StringType(), True),
+    StructField("alter", StringType(), True),
+    StructField("timestamp1", StringType(), True),
+    StructField("Ingesttime", StringType(), True),
+    StructField("FilePath", StringType(), True)
+])
