@@ -1,0 +1,16 @@
+from pyspark.sql.functions import col
+
+# Collect file paths into a list
+file_paths_kunde = [row.filePath for row in new_files_kunde.select("filePath").collect()]
+cleaned_df= '/Volumes/.../.../cleaning_bronze_kunde/cleaned_df.csv'
+# Define the DataFrame for Kunde with file path metadata
+bronze_Kunde_lazy = (
+    spark
+    .read
+    .option("encoding", "UTF-8")
+    .csv(cleaned_df, header=True)
+    .withColumn("Ingesttime", ts)
+    .withColumn("FilePath", col("_metadata.file_path"))
+)
+
+display(bronze_Kunde_lazy) Siehe Foto display_bronze_kunde
