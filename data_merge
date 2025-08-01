@@ -23,4 +23,4 @@ updates = ", ".join([f"target.{col} = source.{col}" for col in columns if col !=
 merge_statement = merge_statement.format(conditions=conditions, updates=updates)
 
 # Perform the merge operation
-spark.sql(merge_statement)
+spark.sql(merge_statement) # result in png surname_change
